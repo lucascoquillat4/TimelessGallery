@@ -248,6 +248,101 @@ footer {
 }
 /*--END--Modal Button1 (icon) & Modal Button (exchanges)*/
 
+/*--START--Connexion Form*/
+.login-form {
+    margin-top: 20px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #222;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: white;
+    margin-bottom: 15px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #555;
+}
+
+/* Ajustement pour les boutons du formulaire */
+.login-form .cta-button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.profile-info {
+    margin-bottom: 20px;
+}
+
+.info-group {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.info-group label {
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.info-group p {
+    margin: 0;
+    color: #333;
+    font-size: 16px;
+}
+
+#profileCards {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#profileCards li {
+    padding: 8px;
+    margin: 5px 0;
+    background-color: #363636;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+#logoutBtn {
+    width: 100%;
+    margin: 20px 0;
+}
+/*--END--Connexion Form*/
+
+
+
+/*--START--Title Animation*/
+.animated-title {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUpInBounce 1.2s cubic-bezier(0.36, 0, 0.66, 1.3) forwards;
+}
+
+@keyframes fadeUpInBounce {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    50% {
+        opacity: 0.8;
+    }
+    80% {
+        transform: translateY(-5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/*--END--Title Animation*/
 
 
 /*--START--Title Animation*/
