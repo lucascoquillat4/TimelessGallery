@@ -62,6 +62,12 @@ header {
     max-width: 800px;
     position: relative;
     text-align: center;
+    padding: 20px;
+}
+
+/* Pour le mode sombre */
+body.dark-mode .slider-container {
+    background-color: #333;
 }
 
 .swiper {
@@ -248,7 +254,7 @@ footer {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
-    color: #222;
+    color: #7a7a7a;
 }
 
 .form-group select {
@@ -636,5 +642,84 @@ body.dark-mode .contact-form .cta-button:hover {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-collection-btn:hover {
+    background-color: #555;
 }
 /*--END--Collection Section TEST TEST*/
+
+/*--START--Slide In Right Animation*/
+.slide-in-right {
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all 1s ease-out;
+}
+
+.slide-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+/*--END--Slide In Right Animation*/
+
+/*--START--Booster Section*/
+.booster-section {
+    padding: 40px;
+    text-align: center;
+}
+
+.booster-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 30px;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+
+.booster-btn:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+.booster-btn:disabled {
+    background-color: #888;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pack-icon {
+    font-size: 24px;
+}
+
+.timer-text {
+    margin-top: 10px;
+    color: #666;
+    font-size: 14px;
+}
+
+body.dark-mode .timer-text {
+    color: #aaa;
+}
+
+.booster-image {
+    max-width: 200px;
+    height: auto;
+    display: block;
+    margin: 0 auto 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.booster-image:hover {
+    transform: scale(1.05);
+}
+/*--END--Booster Section*/

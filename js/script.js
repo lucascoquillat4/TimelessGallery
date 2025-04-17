@@ -84,6 +84,28 @@ document.addEventListener('DOMContentLoaded', function() {
         
         closeBtn.click();
     });
+
+    // Configuration de l'Intersection Observer
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            } else {
+                entry.target.classList.remove('visible');
+            }
+        });
+    }, observerOptions);
+
+    // Observer tous les éléments avec la classe slide-in-right
+    document.querySelectorAll('.slide-in-right').forEach(element => {
+        observer.observe(element);
+    });
 });
 //--END MODAL EXCHANGE BUTTON--//
 
@@ -298,7 +320,7 @@ async function loadArtworks() {
                     const addButton = document.querySelector('.add-collection-btn');
                     infoDiv.innerHTML = `
                         <h3>${currentArtwork.title}</h3>
-                        <p>Date: ${currentArtwork.dated || 'Non disponible'}</p>
+                        <p>Date: ${currentArtwork.dated || 'Non Disponible'}</p>
                     `;
 
                     // Mettre à jour le onclick du bouton
@@ -472,3 +494,92 @@ function updateCollectionDisplay() {
         </div>
     `).join('');
 }
+
+//--START BOOSTER FUNCTIONALITY--//
+document.addEventListener('DOMContentLoaded', function() {
+    const boosterBtn = document.getElementById('boosterBtn');
+    const timerText = document.getElementById('boosterTimer');
+
+    function checkBoosterAvailability() {
+        const lastBoosterTime = localStorage.getItem('lastBoosterTime');
+        const now = new Date().getTime();
+        const cooldownPeriod = 24 * 60 * 60 * 1000; // 24 heures en millisecondes
+
+        if (lastBoosterTime) {
+            const timeElapsed = now - parseInt(lastBoosterTime);
+            if (timeElapsed < cooldownPeriod) {
+                const timeRemaining = cooldownPeriod - timeElapsed;
+                const hoursRemaining = Math.floor(timeRemaining / (60 * 60 * 1000));
+                const minutesRemaining = Math.floor((timeRemaining % (60 * 60 * 1000)) / (60 * 1000));
+                
+                boosterBtn.disabled = true;
+                timerText.textContent = `Prochain booster disponible dans ${hoursRemaining}h ${minutesRemaining}m`;
+                return false;
+            }
+        }
+        
+        boosterBtn.disabled = false;
+        timerText.textContent = 'Booster disponible !';
+        return true;
+    }
+
+    async function openBooster() {
+        try {
+            const params = new URLSearchParams({
+                apikey: apiKey,
+                classification: 'Paintings',
+                size: 20,
+                hasimage: 1,
+                sort: 'random'
+            });
+
+            const response = await fetch(`${baseUrl}?${params}`);
+            const data = await response.json();
+            
+            // Sélectionner 5 œuvres aléatoires
+            const randomArtworks = data.records
+                .filter(artwork => artwork.primaryimageurl)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 5);
+
+            // Ajouter à la collection
+            let collection = JSON.parse(localStorage.getItem('collection') || '[]');
+            randomArtworks.forEach(artwork => {
+                collection.push({
+                    id: artwork.id,
+                    title: artwork.title,
+                    image: artwork.primaryimageurl
+                });
+            });
+            
+            localStorage.setItem('collection', JSON.stringify(collection));
+            localStorage.setItem('lastBoosterTime', new Date().getTime().toString());
+
+            // Afficher un message de succès
+            alert('Félicitations ! 5 nouvelles œuvres ont été ajoutées à votre collection !');
+            
+            // Mettre à jour le timer
+            checkBoosterAvailability();
+            
+            // Mettre à jour l'affichage de la collection si le profil est ouvert
+            updateCollectionDisplay();
+
+        } catch (error) {
+            console.error('Erreur lors de l\'ouverture du booster:', error);
+            alert('Une erreur est survenue lors de l\'ouverture du booster.');
+        }
+    }
+
+    boosterBtn.addEventListener('click', function() {
+        if (!localStorage.getItem('isLoggedIn')) {
+            alert('Veuillez vous connecter pour ouvrir un booster !');
+            return;
+        }
+        openBooster();
+    });
+
+    // Vérifier la disponibilité du booster toutes les minutes
+    checkBoosterAvailability();
+    setInterval(checkBoosterAvailability, 60000);
+});
+//--END BOOSTER FUNCTIONALITY--//
