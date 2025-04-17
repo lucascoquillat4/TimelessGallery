@@ -495,7 +495,7 @@ function updateCollectionDisplay() {
     `).join('');
 }
 
-//--START BOOSTER FUNCTIONALITY--//
+//--START BOOSTER--//
 document.addEventListener('DOMContentLoaded', function() {
     const boosterBtn = document.getElementById('boosterBtn');
     const timerText = document.getElementById('boosterTimer');
@@ -503,7 +503,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkBoosterAvailability() {
         const lastBoosterTime = localStorage.getItem('lastBoosterTime');
         const now = new Date().getTime();
-        const cooldownPeriod = 24 * 60 * 60 * 1000; // 24 heures en millisecondes
+        const cooldownPeriod = 600000; // 24 heures en millisecondes
 
         if (lastBoosterTime) {
             const timeElapsed = now - parseInt(lastBoosterTime);
