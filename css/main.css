@@ -60,11 +60,46 @@ header {
     margin: 30px auto;
     width: 80%;
     max-width: 800px;
+    position: relative;
+    text-align: center;
+}
+
+.swiper {
+    width: 100%;
+    height: 500px;
+    margin: 0 auto;
+}
+
+.swiper-slide {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .swiper-slide img {
-    width: 100%;
-    border-radius: 10px;
+    max-width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.swiper-slide strong {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    color: black
+}
+
+.swiper-slide h3 {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: white;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    margin: 0;
 }
 
 .gallery-title {
@@ -72,7 +107,13 @@ header {
     font-size: 2.5em;
     color: #222;
     margin-bottom: 30px;
-    padding-top: 50px;
+    padding-top: 70px;
+}
+
+.slide-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 /*--END--Swiper.js*/
 
@@ -169,11 +210,14 @@ footer {
     justify-content: center;
     align-items: center;
     animation: fadeIn 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.modal.active {
+    opacity: 1;
+    visibility: visible;
 }
 
 .modal-content {
@@ -247,6 +291,7 @@ footer {
     background-color: #555;
 }
 /*--END--Modal Button1 (icon) & Modal Button (exchanges)*/
+
 
 /*--START--Connexion Form*/
 .login-form {
@@ -345,32 +390,6 @@ footer {
 /*--END--Title Animation*/
 
 
-/*--START--Title Animation*/
-.animated-title {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUpInBounce 1.2s cubic-bezier(0.36, 0, 0.66, 1.3) forwards;
-}
-
-@keyframes fadeUpInBounce {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    50% {
-        opacity: 0.8;
-    }
-    80% {
-        transform: translateY(-5px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-/*--END--Title Animation*/
-
-
 /*--START--Contact Form*/
 .contact-section {
     padding: 60px 20px;
@@ -421,3 +440,201 @@ footer {
     margin-top: 10px;
 }
 /*--END--Contact Form*/
+
+/*--START--DarkMode */
+.dark-mode-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.dark-mode-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode-btn .icon {
+    font-size: 16px;
+}
+
+.dark-mode-btn .text {
+    text-transform: capitalize;
+}
+
+/* Styles spécifiques pour le mode sombre */
+body.dark-mode .dark-mode-btn {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode {
+    background: #2d2d2d;
+    color: #ffffff;
+}
+
+body.dark-mode .navbar,
+body.dark-mode header,
+body.dark-mode footer {
+    background: #000000;
+}
+
+body.dark-mode .info-group p  {
+    color: #ffffff
+}
+
+body.dark-mode .about {
+    color: #ffffff;
+    background-color: #343434;
+}
+body.dark-mode .modal-content {
+    background-color: #2d2d2d;
+    color: #ffffff;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border-color: #444;
+}
+
+body.dark-mode .contact-form {
+    background-color: #464646;
+}
+
+body.dark-mode .swiper-slide strong {
+    color: #ffffff;
+}
+
+body.dark-mode .gallery-title {
+    color: #ffffff;
+}
+
+body.dark-mode .modal-title {
+    color: #ffffff;
+}
+
+body.dark-mode .cta-button {
+    background: #444;
+    color: #ffffff;
+}
+
+body.dark-mode .cta-button:hover {
+    background: #666;
+}
+
+body.dark-mode .contact-section {
+    background-color: #2d2d2d;
+}
+
+body.dark-mode .contact-container h2 {
+    color: #ffffff;
+}
+
+body.dark-mode .contact-form label {
+    color: #ffffff;
+}
+
+body.dark-mode .contact-form input,
+body.dark-mode .contact-form textarea {
+    background-color: #7a7a7a;
+    color: #ffffff;
+    border: 1px solid #444;
+}
+
+body.dark-mode .contact-form input:focus,
+body.dark-mode .contact-form textarea:focus {
+    border-color: #666;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .contact-form .cta-button {
+    background-color: #444;
+    color: #ffffff;
+}
+
+body.dark-mode .contact-form .cta-button:hover {
+    background-color: #555;
+}
+/*--END--DarkMode */
+
+
+/*--START--Collection Section TEST TEST*/
+.collection-container {
+    max-height: 400px;
+    overflow-y: auto;
+    margin: 10px 0;
+    padding: 10px; /* Réduit le padding */
+    width: 100%;
+}
+  
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(150px, 1fr)); /* Définit une taille minimale et maximale */
+    gap: 10px; /* Réduit l'espace entre les cartes */
+    padding: 10px;
+    width: 100%;
+}
+  
+.artwork-card {
+    background: white;
+    border-radius: 6px; /* Réduit légèrement le border-radius */
+    padding: 6px; /* Réduit le padding */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+}
+  
+.artwork-card img {
+    width: 100%;
+    height: 100px; /* Réduit la hauteur de l'image */
+    object-fit: cover;
+    border-radius: 3px;
+}
+  
+.artwork-card h3 {
+    margin: 6px 0; /* Réduit les marges */
+    font-size: 12px; /* Réduit la taille de la police */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+  
+.artwork-card p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+  
+.artwork-card button {
+    background: #ff4444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.artwork-info {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.add-collection-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+/*--END--Collection Section TEST TEST*/

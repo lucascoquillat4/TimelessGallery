@@ -17,9 +17,13 @@
     <nav class="navbar">
         <div class="nav-content">
             <a href="#">Home</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#contact">Contact</a>
-            <a href="#" id="account-btn">Se connecter</a>
+            <a href="#gallery">Gallerie</a>
+            <a href="#contact">Contacte</a>
+            <a href="#" id="accountBtn">Compte</a>
+            <button id="darkModeToggle" class="dark-mode-btn">
+                <span class="icon">☀️</span>
+                <span class="text">clair</span>
+            </button>
         </div>
     </nav>
 <!-- Fin Header -->
@@ -35,20 +39,56 @@
 
 
 <!-- Swiper début (Gallery)-->
-    <section class="slider-container" id="gallery">
-        <h2 class="gallery-title">Gallery</h2>
-        <div class="swiper mySwiper" style="height: 500px;">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><strong>La Grande Vague de Kanagawa (1830)</strong><img src="img/vague.png" alt="La Grande Vague de Kanagawa"></div>
-                <div class="swiper-slide"><strong>La Nuit étoilée (1889)</strong> <img src="img/VG.png" alt="La Nuit étoilée (1889)"></div>
-                <div class="swiper-slide"><strong>Le cri (1893)</strong> <img src="img/leCri.png" alt="Le cri (1893)"></div>
-            </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
+<section class="slider-container" id="gallery">
+    <h2 class="gallery-title">Gallerie</h2>
+    <!-- Conteneur pour les informations de l'œuvre -->
+    <div class="artwork-info"></div>
+    
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper" id="artworkContainer">
+            <!-- Les images seront chargées ici -->
         </div>
-    </section>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+    
+    <!-- Bouton unique pour ajouter à la collection -->
+    <button class="add-collection-btn">Ajouter à ma collection</button>
+</section>
 <!-- Fin Swiper (Gallery)-->
+
+
+<!-- Bouton flottant (icone "+") -->
+<button class="floating-btn" id="openModalBtn">+</button>
+
+
+<!-- Début Modal (exchanges) -->
+<div id="exchangeModal" class="modal">
+    <div class="modal-content">
+        <h3>Proposer un échange</h3>
+        <form class="exchange-form">
+            <div class="form-group">
+                <label for="personSelect">Avec qui échanger :</label>
+                <select id="personSelect" required>
+                    <option value="">Sélectionnez une personne</option>
+                    <option value="person1">Personne 1</option>
+                    <option value="person2">Personne 2</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cardSelect">Œuvre à échanger :</label>
+                <select id="cardSelect" required>
+                    <!-- Les options seront ajoutées dynamiquement -->
+                </select>
+            </div>
+            <button type="submit" class="cta-button">Proposer l'échange</button>
+        </form>
+        <button id="closeModalBtn" class="close-btn">Fermer</button>
+    </div>
+</div>
+<!-- Fin de la modal (exchanges) -->
+
 
 <!-- Début Modal de connexion -->
 <div class="modal" id="loginModal">
@@ -74,40 +114,30 @@
 </div>
 <!-- Fin Modal de connexion -->
 
-<!-- Bouton flottant (icone "+") -->
-<button class="floating-btn" id="openModalBtn">+</button>
 
-
-<!-- Début Modal (exchanges) -->
-<div class="modal" id="exchangeModal">
+<!-- Début Profile Section -->
+<div class="modal" id="profileModal">
     <div class="modal-content">
-        <h3 class="modal-title">Échange de Cartes</h3>
-        <form class="exchange-form">
-            <div class="form-group">
-                <label for="personSelect">Choisir une personne :</label>
-                <select id="personSelect" required>
-                    <option value="">Sélectionnez une personne</option>
-                    <option value="person1">Anthony</option>
-                    <option value="person2">Léo</option>
-                    <option value="person3">Enzo</option>
-                </select>
+        <h3 class="modal-title">Mon Profil</h3>
+        <div class="profile-info">
+            <div class="info-group">
+                <label>Email:</label>
+                <p id="profileEmail"></p>
             </div>
-            <div class="form-group">
-                <label for="cardSelect">Choisir une carte à échanger :</label>
-                <select id="cardSelect" required>
-                    <option value="">Sélectionnez une carte</option>
-                    <option value="card1">La Grande Vague de Kanagawa</option>
-                    <option value="card2">La Nuit étoilée</option>
-                    <option value="card3">Le Cri</option>
-                </select>
+            <div class="info-group">
+                <label>Pseudo:</label>
+                <p id="profilePseudo"></p>
             </div>
-            <button type="submit" class="cta-button">Proposer l'échange</button>
-        </form>
-        <button class="close-btn" id="closeModalBtn">Fermer</button>
+            <div class="collection-container">
+                <h2>Ma Collection</h2>
+            <div id="collection" class="card-grid"></div>
+            </div>
+        </div>
+        <button class="cta-button" id="logoutBtn">Se déconnecter</button>
+        <button class="close-btn" id="closeProfileBtn">Fermer</button>
     </div>
 </div>
-<!-- Fin de la modal (exchanges) -->
-
+<!-- Fin Profile Section -->
 
 
 <!-- Début Contact Form -->
