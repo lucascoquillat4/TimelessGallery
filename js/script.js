@@ -7,7 +7,8 @@ var swiper = new Swiper(".mySwiper", {
 //--END SWIPER.js--//
 
 
-//--START MODAL EXCHANGE BUTTON--//
+
+//--START--Modal Button1 (icon) & Modal Button (exchanges)--//
 document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('exchangeModal');
     const openBtn = document.getElementById('openModalBtn');
@@ -107,10 +108,11 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(element);
     });
 });
-//--END MODAL EXCHANGE BUTTON--//
+//--END--Modal Button1 (icon) & Modal Button (exchanges)--//
 
 
-//--START MODAL CONNEXION BUTTON--//
+
+//--START--Connexion Form//
 document.addEventListener('DOMContentLoaded', function() {
     const loginModal = document.getElementById('loginModal');
     const accountBtn = document.getElementById('accountBtn');
@@ -239,10 +241,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-//--END MODAL CONNEXION BUTTON--//
+//--END--Connexion Form//
 
 
-//--START CONTACT SECTION--//
+
+//--START--Contact Form//
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -257,7 +260,8 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     this.reset();
     alert('Message envoyé avec succès!');
 });
-//--END CONTACT SECTION--//
+//--END--Contact Form//
+
 
 // Configuration de l'API Harvard Art Museums
 const apiKey = 'f8d91983-f617-4667-9946-f1d6c3aba244';
@@ -265,30 +269,24 @@ const baseUrl = 'https://api.harvardartmuseums.org/object';
 
 // Fonction pour charger les œuvres d'art
 async function loadArtworks() {
-    try {
+    try { // Gestion des erreurs
         const params = new URLSearchParams({
             apikey: apiKey,
             classification: 'Paintings',
-            size: 10, // Augmente le nombre d'œuvres pour plus de variété
+            size: 5,
             hasimage: 1,
-            sort: 'random', // Ajoute le paramètre sort=random pour un ordre aléatoire
-            q: '*', // Ajoute une recherche générale
-            fields: 'primaryimageurl,title,dated'
+            sort: 'random'
         });
 
         const response = await fetch(`${baseUrl}?${params}`);
         const data = await response.json();
         
-        // Mélanger le tableau des résultats
-        const shuffledRecords = data.records.sort(() => Math.random() - 0.5);
-        
         const artworkContainer = document.getElementById('artworkContainer');
+        const infoDiv = document.querySelector('.artwork-info');
         artworkContainer.innerHTML = '';
 
-        // Limiter à 5 œuvres maximum
-        const selectedArtworks = shuffledRecords.slice(0, 5);
-
-        selectedArtworks.forEach(artwork => {
+        // Créer les slides
+        data.records.forEach(artwork => {
             if (artwork.primaryimageurl) {
                 const slide = createArtworkSlide(artwork);
                 artworkContainer.appendChild(slide);
@@ -311,32 +309,32 @@ async function loadArtworks() {
                 prevEl: '.swiper-button-prev'
             },
             on: {
+                init: function() {
+                    updateArtworkInfo(data.records[0]);
+                },
                 slideChange: function() {
-                    const activeIndex = this.realIndex;
-                    const currentArtwork = selectedArtworks[activeIndex];
-                    
-                    // Mettre à jour les informations
-                    const infoDiv = document.querySelector('.artwork-info');
-                    const addButton = document.querySelector('.add-collection-btn');
-                    infoDiv.innerHTML = `
-                        <h3>${currentArtwork.title}</h3>
-                        <p>Date: ${currentArtwork.dated || 'Non Disponible'}</p>
-                    `;
-
-                    // Mettre à jour le onclick du bouton
-                    addButton.onclick = () => addToCollection({
-                        id: currentArtwork.id,
-                        title: currentArtwork.title,
-                        image: currentArtwork.primaryimageurl
-                    });
+                    const realIndex = this.realIndex;
+                    updateArtworkInfo(data.records[realIndex]);
                 }
             }
         });
 
-        // Afficher les informations initiales
-        window.swiper.emit('slideChange');
+        function updateArtworkInfo(artwork) {
+            infoDiv.innerHTML = `
+                <h3>${artwork.title}</h3>
+                <p>Date: ${artwork.dated || 'Non disponible'}</p>
+            `;
 
-    } catch (error) {
+            // Ajouter un bouton pour ajouter à la collection
+            const addButton = document.querySelector('.add-collection-btn');
+            addButton.onclick = () => addToCollection({
+                id: artwork.id,
+                title: artwork.title,
+                image: artwork.primaryimageurl
+            });
+        }
+
+    } catch (error) { // Gestion des erreurs
         console.error('Erreur lors du chargement des œuvres:', error);
     }
 }
@@ -350,14 +348,21 @@ function createArtworkSlide(artwork) {
     
     slide.innerHTML = `
         <div class="slide-content">
+            <button class="favorite-btn ${isArtworkFavorite(artwork.id) ? 'active' : ''}" 
+                    onclick="toggleFavorite(${artwork.id}, '${artwork.title}', '${artwork.primaryimageurl}')">
+                <svg class="heart-icon" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            </button>
             <img src="${artwork.primaryimageurl}" alt="${artwork.title}">
+            <h3>${artwork.title}</h3>
         </div>
     `;
 
     return slide;
 }
 
-// Dark Mode
+//--START--DarkMode//
 document.addEventListener('DOMContentLoaded', () => {
     const darkModeToggle = document.getElementById('darkModeToggle');
     const darkModeIcon = darkModeToggle.querySelector('.icon');
@@ -432,11 +437,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialiser l'état du bouton au chargement
     updateAccountButton();
 });
+//--END--DarkMode//
 
 
-
-//testtestetstestst
-// Ajouter ceci au début du fichier
+//--START--Collection Section//
 let collection = JSON.parse(localStorage.getItem('collection') || '[]');
 
 function updateCollection() {
@@ -480,22 +484,40 @@ function addToCollection(artwork) {
     }
 }
 
-function updateCollectionDisplay() {
+function updateCollectionDisplay(searchTerm = '') {
     const collectionDiv = document.getElementById('collection');
     if (!collectionDiv) return;
 
     const collection = JSON.parse(localStorage.getItem('collection') || '[]');
-    collectionDiv.innerHTML = collection.map(artwork => `
+    
+    // Filter collection based on search term
+    const filteredCollection = collection.filter(artwork => 
+        artwork.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    collectionDiv.innerHTML = filteredCollection.map(artwork => `
         <div class="artwork-card">
             <img src="${artwork.image}" alt="${artwork.title}">
             <h3>${artwork.title}</h3>
-            <p>${artwork.artist}</p>
             <button onclick="removeFromCollection(${artwork.id})">Retirer</button>
         </div>
     `).join('');
 }
 
-//--START BOOSTER--//
+// Add event listener for search input
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('collectionSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            updateCollectionDisplay(e.target.value);
+        });
+    }
+});
+//--END--Collection Section//
+
+
+
+//--START--Booster Section//
 document.addEventListener('DOMContentLoaded', function() {
     const boosterBtn = document.getElementById('boosterBtn');
     const timerText = document.getElementById('boosterTimer');
@@ -503,7 +525,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkBoosterAvailability() {
         const lastBoosterTime = localStorage.getItem('lastBoosterTime');
         const now = new Date().getTime();
-        const cooldownPeriod = 600000; // 24 heures en millisecondes
+        const cooldownPeriod = 600000; // 24 heures en millisecondes: 24 * 60 * 60 * 1000; 60000ms = 6 min//
 
         if (lastBoosterTime) {
             const timeElapsed = now - parseInt(lastBoosterTime);
@@ -582,4 +604,117 @@ document.addEventListener('DOMContentLoaded', function() {
     checkBoosterAvailability();
     setInterval(checkBoosterAvailability, 60000);
 });
-//--END BOOSTER FUNCTIONALITY--//
+
+document.addEventListener('DOMContentLoaded', function() {
+    const slides = document.querySelectorAll('.booster-slide');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    let currentSlide = 0;
+
+    function updateSlides(direction) {
+        slides.forEach(slide => {
+            slide.classList.remove('active', 'left', 'right');
+        });
+
+        if (direction === 'next') {
+            slides[currentSlide].classList.add('left');
+            currentSlide = (currentSlide + 1) % slides.length;
+        } else if (direction === 'prev') {
+            slides[currentSlide].classList.add('right');
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        }
+        
+        slides[currentSlide].classList.add('active');
+    }
+
+    prevBtn.addEventListener('click', () => {
+        updateSlides('prev');
+    });
+
+    nextBtn.addEventListener('click', () => {
+        updateSlides('next');
+    });
+
+    // Modifier la fonction openBooster pour prendre en compte le type de booster
+    async function openBooster() {
+        const boosterTypes = ['MonaLisa', 'LaNuitEtoilee', 'LeCri'];
+        const currentType = boosterTypes[currentSlide];
+        try {
+            const params = new URLSearchParams({
+                apikey: apiKey,
+                classification: 'Paintings',
+                size: 20,
+                hasimage: 1,
+                sort: 'random'
+            });
+
+            const response = await fetch(`${baseUrl}?${params}`);
+            const data = await response.json();
+            
+            // Sélectionner 5 œuvres aléatoires
+            const randomArtworks = data.records
+                .filter(artwork => artwork.primaryimageurl)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 5);
+
+            // Ajouter à la collection
+            let collection = JSON.parse(localStorage.getItem('collection') || '[]');
+            randomArtworks.forEach(artwork => {
+                collection.push({
+                    id: artwork.id,
+                    title: artwork.title,
+                    image: artwork.primaryimageurl,
+                    type: currentType
+                });
+            });
+            
+            localStorage.setItem('collection', JSON.stringify(collection));
+            localStorage.setItem('lastBoosterTime', new Date().getTime().toString());
+
+            // Afficher un message de succès
+            alert(`Félicitations ! 5 nouvelles œuvres (${currentType}) ont été ajoutées à votre collection !`);
+            
+            // Mettre à jour le timer
+            checkBoosterAvailability();
+            
+            // Mettre à jour l'affichage de la collection si le profil est ouvert
+            updateCollectionDisplay();
+
+        } catch (error) {
+            console.error('Erreur lors de l\'ouverture du booster:', error);
+            alert('Une erreur est survenue lors de l\'ouverture du booster.');
+        }
+    }
+});
+//--END--Booster Section//
+
+//--START--Favorite Button//
+function isArtworkFavorite(artworkId) {
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    return favorites.some(fav => fav.id === artworkId);
+}
+
+function toggleFavorite(id, title, image) {
+    if (!localStorage.getItem('isLoggedIn')) {
+        alert('Veuillez vous connecter pour ajouter des favoris');
+        return;
+    }
+
+    let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const index = favorites.findIndex(fav => fav.id === id);
+
+    if (index === -1) {
+        // Ajouter aux favoris
+        favorites.push({ id, title, image });
+        const btn = event.currentTarget;
+        btn.classList.add('active');
+    } else {
+        // Retirer des favoris
+        favorites.splice(index, 1);
+        const btn = event.currentTarget;
+        btn.classList.remove('active');
+    }
+
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+}
+//--START--Favorite Button//

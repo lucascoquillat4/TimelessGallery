@@ -18,7 +18,7 @@
         <div class="nav-content">
             <a href="#">Home</a>
             <a href="#gallery">Gallerie</a>
-            <a href="#contact">Contacte</a>
+            <a href="#contact">Contact</a>
             <a href="#" id="accountBtn">Compte</a>
             <button id="darkModeToggle" class="dark-mode-btn">
                 <span class="icon">☀️</span>
@@ -39,10 +39,31 @@
 
 <!-- Début Booster Section -->
 <section class="booster-section">
-    <img src="img/booster.pack.png" alt="Booster" class="booster-image">
+    <h2>Sélectionnez votre Booster</h2>
+    <div class="booster-slider">
+        <button class="slider-btn prev-btn">❮</button>
+        <div class="booster-container">
+            <div class="booster-slide active">
+                <img src="img/booster.pack.png" alt="Booster Classique" class="booster-image">
+                <h3>Booster Classique</h3>
+                <p>"Mona Lisa"</p>
+            </div>
+            <div class="booster-slide">
+                <img src="img/booster.pack2.png" alt="Booster Gold" class="booster-image">
+                <h3>Booster Classique</h3>
+                <p>"La Nuit étoilée"</p>
+            </div>
+            <div class="booster-slide">
+                <img src="img/booster.pack3.png" alt="Booster Diamond" class="booster-image">
+                <h3>Booster Classique</h3>
+                <p>"Le Cri"</p>
+            </div>
+        </div>
+        <button class="slider-btn next-btn">❯</button>
+    </div>
     <button id="boosterBtn" class="booster-btn">
         <span class="pack-icon">🎁</span>
-        Ouvrir un Booster
+        Ouvrir le Booster
     </button>
     <p id="boosterTimer" class="timer-text"></p>
 </section>
@@ -50,7 +71,7 @@
 
 <!-- Swiper début (Gallery)-->
 <section class="slider-container" id="gallery">
-    <h2 class="gallery-title">Gallerie</h2>
+    <div class="slide-in-right"><h2 class="gallery-title">Gallerie</h2></div>
     <!-- Conteneur pour les informations de l'œuvre -->
     <div class="artwork-info"></div>
     
@@ -89,6 +110,7 @@
             <div class="form-group">
                 <label for="cardSelect">Œuvre à échanger :</label>
                 <select id="cardSelect" required>
+                    <option value="" disabled selected>Choisissez une œuvre</option>
                     <!-- Les options seront ajoutées dynamiquement -->
                 </select>
             </div>
@@ -140,7 +162,10 @@
             </div>
             <div class="collection-container">
                 <h2>Ma Collection</h2>
-            <div id="collection" class="card-grid"></div>
+                <div class="search-container">
+                    <input type="text" id="collectionSearch" placeholder="Rechercher une œuvre..." class="search-input">
+                </div>
+                <div id="collection" class="card-grid"></div>
             </div>
         </div>
         <button class="cta-button" id="logoutBtn">Se déconnecter</button>
@@ -179,6 +204,13 @@
         <div class="footer-content">
             <p>&copy; 2025 - Tous droits réservés | Lucas Coquillat</p>
         </div>
+        <p>
+            <a target="blank" href="https://jigsaw.w3.org/css-validator/check/referer">
+                <img style="border:0;width:88px;height:31px"
+                    src="https://jigsaw.w3.org/css-validator/images/vcss-blue"
+                    alt="CSS Valide !" />
+            </a>
+        </p>
     </footer>
 <!-- Fin Footer -->
 
