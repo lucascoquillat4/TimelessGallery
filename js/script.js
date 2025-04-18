@@ -717,4 +717,4 @@ function toggleFavorite(id, title, image) {
 
     localStorage.setItem('favorites', JSON.stringify(favorites));
 }
-//--START--Favorite Button//
+//--END--Favorite Button//
