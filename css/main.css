@@ -14,7 +14,6 @@ body {
     color: #333;
     text-align: center;
 }
-
 /*--STAR-- Header + Navbar*/
 header {
     background: #222;
@@ -130,7 +129,7 @@ header {
     transition: background-color 0.3s;
 }
 
-slider-btn:hover {
+.slider-btn:hover {
     background: #555;
 }
 
@@ -247,22 +246,76 @@ slider-btn:hover {
     font-size: 18px;
     margin-bottom: 20px;
 }
+
+.submit-btn {
+    background-color: #222;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    font-size: 16px;
+}
+
+.submit-btn:hover {
+    background-color: #555;
+}
+
+.about.parallax-bg {
+    background-image: url('../img/vague.png');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 150px 20px;
+    position: relative;
+}
+
+/* Ajout d'un overlay pour améliorer la lisibilité du texte */
+.about.parallax-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.about.parallax-bg h2,
+.about.parallax-bg p,
+.about.parallax-bg a {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+}
 /*--END--About Section*/
 
 
 /*--START--CTA Button*/
 .cta-button {
     display: inline-block;
-    padding: 10px 20px;
-    background: #222;
+    padding: 30px 100px;
+    background: #1f1d7a;
     color: white;
     text-decoration: none;
     border-radius: 5px;
-    transition: 0.3s;
+    border: 2px solid #1f1d7a;
+    transition: all 0.3s ease;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.cta-button:hover {
-    background: #555;
+.about.parallax-bg .cta-button:hover {
+    color: #1f1d7a; /* Changé en bleu au lieu de noir pour plus de cohérence */
+    background: white;
+    border: 2px solid #1f1d7a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(31, 29, 122, 0.2);
 }
 /*--END--CTA Button*/
 
